@@ -1,0 +1,149 @@
+.nft-collection-container {
+  padding-top: 20px;
+}
+.mdc-layout-grid__cell {
+  width: 400px;
+}
+.nft-collection-container .loading-spinner {
+  text-align: center;
+}
+.nft-collection-container .nft-element {
+  background-size: cover !important;
+}
+.nft-element .nft-overlay {
+  background: rgba(0, 0, 0, 0.75);
+  color: white;
+  font-size: 1.1rem;
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.2s ease-out;
+}
+.nft-element:hover .nft-overlay {
+  visibility: visible;
+  opacity: 1;
+  transition: all 0.2s ease-in;
+}
+.nft-element .nft-overlay .nft-overlay-content {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  height: 100%;
+  padding: 20px 22px;
+  box-sizing: border-box;
+  font-size: 0.9rem;
+}
+.nft-overlay-content .nft-overlay-content-buy-sell-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 20px 22px;
+  width: 100%;
+  box-sizing: border-box;
+}
+.nft-overlay-content .nft-overlay-content-buy-sell-container button {
+  float: right;
+  color: white;
+  border-color: white;
+}
+.nft-overlay-content .nft-overlay-content-buy-sell-container .token-id-label {
+  font-size: 2rem;
+  font-weight: 500;
+}
+.nft-overlay-content .nft-overlay-content-info {
+  width: 100%;
+}
+.nft-overlay-content .nft-overlay-content-info .shorten-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.nft-overlay-content .nft-overlay-content-info .label-text {
+  margin-top: 8px;
+  font-weight: 500;
+}
+.nft-buy-dialog-backdrop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.3);
+}
+.nft-buy-dialog {
+  position: relative;
+  display: inline-block;
+  width: 520px;
+  max-width: calc(100vw - 40px);
+  min-height: 280px;
+  max-height: calc(100vh - 40px);
+  background: white;
+  border-radius: 3px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.nft-buy-dialog .nft-buy-dialog-header {
+  position: relative;
+  height: 50px;
+  padding: 12px 15px 12px 62px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white;
+  background: #6200ee;
+  box-sizing: border-box;
+}
+.nft-buy-dialog .nft-buy-dialog-header .material-icons {
+  position: absolute;
+  left: 22px;
+}
+.nft-buy-dialog .nft-buy-dialog-info {
+  height: calc(100% - 50px);
+  padding: 16px 25px;
+  overflow: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+.nft-buy-dialog .nft-buy-dialog-info .nft-buy-balance-info {
+  display: table;
+  width: 272px;
+  margin: 0 auto;
+}
+.nft-buy-dialog
+  .nft-buy-dialog-info
+  .nft-buy-balance-info.nft-buy-balance-info-result
+  div:last-child {
+  border-top: 3px double #333;
+}
+.nft-buy-dialog .nft-buy-dialog-info .nft-buy-balance-info div {
+  display: table-cell;
+  text-align: right;
+  padding: 6px 20px 6px 3px;
+}
+.nft-buy-dialog .nft-buy-dialog-info .nft-buy-balance-info div:last-child {
+  width: 60px;
+  padding-right: 3px;
+}
+.nft-buy-dialog .nft-buy-dialog-info .nft-buy-dialog-error {
+  padding: 20px 0 5px;
+  color: red;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.nft-buy-dialog .nft-buy-dialog-info .nft-buy-dialog-actions {
+  display: table;
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  width: 100%;
+}
+.nft-buy-dialog .nft-buy-dialog-info .nft-buy-dialog-actions div {
+  display: table-cell;
+  width: 50%;
+  padding: 0 5px;
+  text-align: center;
+}

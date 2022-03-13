@@ -1,41 +1,73 @@
 {
-  "name": "core_project_assets",
-  "version": "0.1.0",
-  "description": "Internet Computer starter application",
-  "keywords": [
-    "Internet Computer",
-    "Motoko",
-    "JavaScript",
-    "Canister"
-  ],
+  "name": "angular-motoko-core-project",
+  "version": "0.0.1",
+  "author": {
+    "name": "Son Pham",
+    "email": "sonpx37@gmail.com",
+    "url": "https://github.com/sonpx37"
+  },
   "scripts": {
-    "build": "webpack",
+    "build": "ng build",
     "prebuild": "npm run copy:types",
-    "start": "webpack serve --mode development --env development",
     "prestart": "npm run copy:types",
-    "copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --delete src/declarations"
+    "copy:types": "rsync -avr .dfx/$(echo ${DFX_NETWORK:-'**'})/canisters/** --exclude='assets/' --exclude='idl/' --exclude='*.wasm' --delete src/declarations",
+    "ng-start-dfx": "dfx stop && dfx start --clean --emulator",
+    "ng-start": "npm run ng-start-dfx && dfx generate && dfx canister create backend && dfx canister create www && npm run ng-serve && npm run print-ng",
+    "ng-serve": "dfx canister create backend && dfx canister create www && dfx generate && concurrently -k \"npm run ng-watch-motoko\" \"ng serve\" ",
+    "ng-build-backend": "dfx deploy backend --argument '(\"Ethereum\",\"ETH\")'",
+    "ng-watch-motoko": "nodemon --watch src --ext mo -x \"npm run ng-build-backend && npm run print-dfx-www\"",
+    "ng-deploy": "dfx deploy www --argument '(\"Ethereum\",\"ETH\")'  && npm run print-dfx-www",
+    "build-dfx-www": "npm run ng-start-dfx && dfx deploy backend --argument '(\"Ethereum\",\"EH\")' && npm run print-dfx-www",
+    "print-dfx-www": "echo local IC server: http://localhost:8000/?canisterId=$(dfx canister id www)",
+    "print-ng": "echo local Angular server: http://localhost:4200",
+    "ng-deploy-ic": "dfx deploy --network ic www --argument '(\"Ethereum\",\"ETH\")'  && npm run print-dfx-www"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~12.2.0",
+    "@angular/cdk": "^12.2.13",
+    "@angular/common": "~12.2.0",
+    "@angular/compiler": "~12.2.0",
+    "@angular/core": "~12.2.0",
+    "@angular/forms": "~12.2.0",
+    "@angular/platform-browser": "~12.2.0",
+    "@angular/platform-browser-dynamic": "~12.2.0",
+    "@angular/router": "~12.2.0",
+    "rxjs": "~6.6.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@dfinity/agent": "0.10.3",
-    "@dfinity/candid": "0.10.3",
-    "@dfinity/principal": "0.10.3",
+    "@angular-builders/custom-webpack": "^12.1.3",
+    "@angular-devkit/build-angular": "~12.2.3",
+    "@angular/cli": "~12.2.3",
+    "@angular/compiler-cli": "~12.2.0",
+    "@types/jasmine": "~3.8.0",
+    "@types/node": "^12.11.1",
+    "jasmine-core": "~3.8.0",
+    "karma": "~6.3.0",
+    "karma-chrome-launcher": "~3.1.0",
+    "karma-coverage": "~2.0.3",
+    "karma-jasmine": "~4.0.0",
+    "karma-jasmine-html-reporter": "^1.7.0",
+    "typescript": "~4.3.5",
+    "@dfinity/agent": "0.10.2",
+    "@dfinity/candid": "0.10.2",
+    "@dfinity/principal": "0.10.2",
     "assert": "2.0.0",
     "buffer": "6.0.3",
+    "concurrently": "^6.2.0",
     "copy-webpack-plugin": "^9.0.1",
     "events": "3.3.0",
     "html-webpack-plugin": "5.5.0",
+    "ng-packagr": "^12.1.0",
+    "nodemon": "^2.0.15",
     "process": "0.11.10",
     "stream-browserify": "3.0.0",
     "terser-webpack-plugin": "5.2.5",
     "util": "0.12.4",
-    "webpack": "5.63.0",
-    "webpack-cli": "4.9.1",
-    "webpack-dev-server": "^4.4.0"
-  },
-  "browserslist": [
-    "last 2 chrome version",
-    "last 2 firefox version",
-    "last 2 safari version",
-    "last 2 edge version"
-  ]
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
+  }
 }

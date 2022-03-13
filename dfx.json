@@ -1,29 +1,23 @@
-{
+ {
   "canisters": {
-    "core_project": {
-      "main": "src/core_project/main.mo",
+    "backend": {
+      "main": "src/backend/main.mo",
       "type": "motoko"
     },
-    "core_project_assets": {
+    "www": {
       "dependencies": [
-        "core_project"
+        "backend"
       ],
       "frontend": {
-        "entrypoint": "src/core_project_assets/src/index.html"
+        "entrypoint": "dist/core_project/index.html"
       },
       "source": [
-        "src/core_project_assets/assets",
-        "dist/core_project_assets/"
+        "dist/core_project"
       ],
       "type": "assets"
     }
   },
-  "defaults": {
-    "build": {
-      "args": "",
-      "packtool": ""
-    }
-  },
+  
   "dfx": "0.8.4",
   "networks": {
     "local": {

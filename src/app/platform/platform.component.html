@@ -1,0 +1,53 @@
+<!-- Tab-Navigation -->
+<div class="mdc-tab-bar" role="tablist">
+  <div class="mdc-tab-scroller">
+    <div class="mdc-tab-scroller__scroll-area">
+      <div class="mdc-tab-scroller__scroll-content">
+        <!-- Tab - Mint NFT -->
+        <button *ngIf="authService.userWalletPrincipal" class="mdc-tab" role="tab" aria-selected="true" tabindex="0"
+          (click)="currentModule = 'mint';" [ngClass]="{'mdc-tab--active': currentModule === 'mint'}">
+          <span class="mdc-tab__content">
+            <span class="mdc-tab__icon material-icons" aria-hidden="true">add_circle</span>
+            <span class="mdc-tab__text-label">Mint</span>
+          </span>
+          <span class="mdc-tab-indicator mdc-tab-indicator--active">
+            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+          </span>
+          <span class="mdc-tab__ripple"></span>
+        </button>
+        <!-- Tab - My NFTs -->
+        <button *ngIf="authService.userWalletPrincipal" class="mdc-tab" role="tab" aria-selected="true" tabindex="1"
+          (click)="currentModule = 'own';" [ngClass]="{'mdc-tab--active': currentModule === 'own'}">
+          <span class="mdc-tab__content">
+            <span class="mdc-tab__icon material-icons" aria-hidden="true">image</span>
+            <span class="mdc-tab__text-label">My Own NFT</span>
+          </span>
+          <span class="mdc-tab-indicator mdc-tab-indicator--active">
+            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+          </span>
+          <span class="mdc-tab__ripple"></span>
+        </button>
+        <!-- Tab - All NFTs-->
+        <button class="mdc-tab" role="tab" aria-selected="true" tabindex="1" (click)="currentModule = 'all';"
+          [ngClass]="{'mdc-tab--active': currentModule === 'all'}">
+          <span class="mdc-tab__content">
+            <span class="mdc-tab__icon material-icons" aria-hidden="true">collections</span>
+            <span class="mdc-tab__text-label">All NFTs</span>
+          </span>
+          <span class="mdc-tab-indicator mdc-tab-indicator--active">
+            <span class="mdc-tab-indicator__content mdc-tab-indicator__content--underline"></span>
+          </span>
+          <span class="mdc-tab__ripple"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Mint NFT -->
+<div *ngIf="currentModule === 'mint'" class="tab-content-container">
+  <app-mint></app-mint>
+</div>
+<!-- Show my or all NFTs -->
+<div *ngIf="['own', 'all'].indexOf(currentModule) >= 0" class="tab-content-container">
+  <app-collection [currentModule]="currentModule"></app-collection>
+</div>

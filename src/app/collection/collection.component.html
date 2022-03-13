@@ -1,0 +1,106 @@
+<div class="nft-collection-container">
+  <!-- Loading-Spinner -->
+  <div *ngIf="getDataInProcess && requestWasSent" class="loading-spinner">
+    <svg class="animated-spinner" width="60px" height="60px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+      <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+      </circle>
+    </svg>
+  </div>
+  <!-- Collection -->
+  <div *ngIf="!getDataInProcess && requestWasSent" class="mdc-layout-grid">
+    <div class="mdc-layout-grid__inner">
+      <div class="mdc-layout-grid__cell" *ngFor="let nft of collection;">
+        <div class="mdc-card mdc-card--outlined">
+          <div class="my-card__media mdc-card__media mdc-card__media--square nft-element"
+            style="background: grey; background-image: url('{{ nft.url }}');">
+            <div class="mdc-card__media-content nft-overlay">
+              <div class="nft-overlay-content">
+                <!-- Market Container -->
+                <div class="nft-overlay-content-buy-sell-container">
+                  <!-- Buy-Button -->
+                  <button *ngIf="authService.userWalletPrincipal && nft.principal !== authService.userWalletPrincipal"
+                    class="mdc-button mdc-button--outlined mdc-button--icon-leading" (click)="buyNft(nft)">
+                    <span class="mdc-button__ripple"></span>
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">shopping_cart</i>
+                    <span class="mdc-button__label">Buy NFT</span>
+                  </button>
+                  <!-- Owned -->
+                  <button *ngIf="authService.userWalletPrincipal && nft.principal === authService.userWalletPrincipal"
+                    class="mdc-button mdc-button--icon-leading" style="pointer-events: none;">
+                    <span class="mdc-button__ripple"></span>
+                    <i class="material-icons mdc-button__icon" aria-hidden="true">sell</i>
+                    <span class="mdc-button__label">Owned</span>
+                  </button>
+                  <!-- Token-ID -->
+                  <span class="token-id-label">
+                    ID {{ nft.tokenId }}
+                  </span>
+                </div>
+                <!-- Info-Text -->
+                <div class="nft-overlay-content-info">
+                  <div class="label-text">Creator:</div>
+                  <div class="shorten-text">{{ nft.creator }}</div>
+                  <div class="label-text">Current owner:</div>
+                  <div class="shorten-text">{{ nft.principal }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Buy-Dialog -->
+  <div *ngIf="buyNftData" class="nft-buy-dialog-backdrop">
+    <div class="nft-buy-dialog">
+      <div class="nft-buy-dialog-header">
+        <i class="material-icons" aria-hidden="true">shopping_cart</i>
+        Buy NFT - ID {{ buyNftData?.tokenId ? buyNftData.tokenId : '' }}
+      </div>
+      <div class="nft-buy-dialog-info">
+        <div class="nft-buy-balance-info">
+          <div>Your token balance:</div>
+          <div>{{ authService.userWalletBalance }}</div>
+        </div>
+        <div class="nft-buy-balance-info">
+          <div>NFT price:</div>
+          <div>{{ tokenPrice }}</div>
+        </div>
+        <div class="nft-buy-balance-info nft-buy-balance-info-result">
+          <div>Balance after transaction:</div>
+          <div>{{ (authService.userWalletBalance - tokenPrice) }}</div>
+        </div>
+        <!-- Error -->
+        <div *ngIf="(authService.userWalletBalance - tokenPrice) < 0" class="nft-buy-dialog-error">
+          Your token balance is too low to complete the transaction!
+        </div>
+        <!-- Buttons -->
+        <div class="nft-buy-dialog-actions">
+          <div>
+            <button type="button" class="mdc-button" (click)="resetNftBuyData()">
+              <span class="mdc-button__ripple"></span>
+              <span class="mdc-button__label">Cancel</span>
+            </button>
+          </div>
+          <div>
+            <button type="button" class="mdc-button mdc-button--raised mdc-button--leading"
+              [disabled]="(authService.userWalletBalance - tokenPrice) < 0 || buyNftInProcess"
+              (click)="buyNftDoTransaction()">
+              <span class="mdc-button__ripple"></span>
+              <i *ngIf="!buyNftInProcess" class="material-icons mdc-button__icon">shopping_cart</i>
+              <span *ngIf="buyNftInProcess" class="mdc-button__icon">
+                <svg class="animated-spinner" width="20px" height="20px" viewBox="0 0 66 66"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33"
+                    r="30">
+                  </circle>
+                </svg>
+              </span>
+              <span class="mdc-button__label">Buy NFT</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

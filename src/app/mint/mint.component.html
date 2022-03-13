@@ -1,0 +1,53 @@
+<div class="mdc-card mdc-card--outlined my-card">
+  <div class="mdc-card__content">
+    <div class="mint-nft-title">
+      <span class="material-icons" aria-hidden="true">add_circle</span>
+      Mint NFT
+    </div>
+    <div class="mint-nft-info">
+      Mint NFTs and get tokens as a reward.
+    </div>
+    <form class="mint-nft-form" name="nftMintForm" (ngSubmit)="mintNft()">
+      <!-- Image-URL -->
+      <div class="form-field">
+        <div class="form-field-label">
+          Image URL:
+        </div>
+        <div class="form-field-input">
+          <label class="mdc-text-field mdc-text-field--textarea mdc-text-field--filled mdc-text-field--no-label">
+            <span class="mdc-notched-outline">
+              <span class="mdc-notched-outline__leading"></span>
+              <span class="mdc-notched-outline__trailing"></span>
+            </span>
+            <span class="mdc-text-field__resizer">
+              <textarea [(ngModel)]="nftUrl" name="nftUrl" class="mdc-text-field__input" rows="3"></textarea>
+            </span>
+          </label>
+        </div>
+      </div>
+      <!-- Submit-Button -->
+      <div class="form-save-btn-container">
+        <button type="submit" class="mdc-button mdc-button--raised mdc-button--leading" [disabled]="mintDisabled()">
+          <span class="mdc-button__ripple"></span>
+          <i *ngIf="!mintInProcess" class="material-icons mdc-button__icon">save</i>
+          <span *ngIf="mintInProcess" class="mdc-button__icon">
+            <svg class="animated-spinner" width="20px" height="20px" viewBox="0 0 66 66"
+              xmlns="http://www.w3.org/2000/svg">
+              <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+              </circle>
+            </svg>
+          </span>
+          <span class="mdc-button__label">Mint NFT</span>
+        </button>
+      </div>
+      <!-- Success-Message -->
+      <div [ngClass]="{'form-save-success-msg-show': this.showSuccessMsg}" class="form-save-success-msg">
+        NFT was minted successfully (+ 100 Tokens)!
+      </div>
+      <div [ngClass]="{'form-save-success-msg-show': this.showErrorMsg}"
+        class="form-save-success-msg form-save-error-msg">
+        Error: invalid principal!
+      </div>
+    </form>
+  </div>
+</div>

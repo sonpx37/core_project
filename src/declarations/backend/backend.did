@@ -1,0 +1,28 @@
+type TokenId = nat;
+type NftToken = 
+ record {
+   creator: principal;
+   "principal": principal;
+   tokenId: nat;
+   url: text;
+ };
+type NftId = nat32;
+type DRC721 = 
+ service {
+   approve: (principal, TokenId) -> ();
+   balanceOf: (principal) -> (opt nat);
+   getAllToken: () -> (vec NftToken) query;
+   getApproved: (nat) -> (principal);
+   getPrincipalsToken: (principal) -> (vec NftToken) query;
+   getTotalCountOfNfts: () -> (nat) query;
+   isApprovedForAll: (principal, principal) -> (bool);
+   mint: (text) -> (nat);
+   mint_principal: (text, principal) -> (nat);
+   name: () -> (text) query;
+   ownerOf: (TokenId) -> (opt principal);
+   setApprovalForAll: (principal, bool) -> () oneway;
+   symbol: () -> (text) query;
+   tokenURI: (TokenId) -> (opt text) query;
+   transferFrom: (principal, principal, nat, NftId) -> () oneway;
+ };
+service : (text, text) -> DRC721

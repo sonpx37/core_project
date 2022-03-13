@@ -1,0 +1,77 @@
+<header class="mdc-top-app-bar">
+  <div class="mdc-top-app-bar__row">
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
+      <span class="mdc-top-app-bar__title" style="padding-left: 0;">{{ appTitle }}</span>
+      <!-- <button class="mdc-button mdc-button--icon-leading mdc-top-app-bar__action-item"
+        (click)="showNfts()"></button> -->
+    </section>
+    <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+      <!-- Logout-Button -->
+      <button *ngIf="showNftPlatform" class="mdc-button mdc-button--icon-leading mdc-top-app-bar__action-item"
+        (click)="logout()">
+        <span class="mdc-button__ripple"></span>
+        <i class="material-icons mdc-button__icon" aria-hidden="true">logout</i>
+        <span *ngIf="authService.userWalletPrincipal" class="mdc-button__label">Logout</span>
+        <span *ngIf="!authService.userWalletPrincipal" class="mdc-button__label">Back</span>
+      </button>
+      <!-- Login-Button -->
+      <button *ngIf="showNftPlatform && !authService.userWalletPrincipal"
+        class="mdc-button mdc-button--icon-leading mdc-top-app-bar__action-item" (click)="plugAuthentication()">
+        <span class="mdc-button__ripple"></span>
+        <img class="mdc-button__icon" src="../assets/plugwallet_logo_sm_white.png" height="24px">
+        <span class="mdc-button__label">Plug Wallet</span>
+      </button>
+      <!-- Logged in status -->
+      <button *ngIf="showNftPlatform && authService.userWalletPrincipal"
+        class="mdc-button mdc-button--icon-leading mdc-button--icon-leading mdc-button--outlined plug-wallet-connected-btn">
+        <span class="mdc-button__ripple"></span>
+        <img class="mdc-button__icon" src="../assets/plugwallet_logo_sm.png" height="24px">
+        <span class="mdc-button__label">{{ authService.userWalletBalance ? authService.userWalletBalance : '0' }}
+          Tokens</span>
+      </button>
+    </section>
+  </div>
+</header>
+<main class="mdc-top-app-bar--fixed-adjust">
+  <!-- App Plug-Login Spinner -->
+  <div *ngIf="!showAppContents" class="plug-wallet-connection-loading">
+    <svg class="animated-spinner" width="60px" height="60px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+      <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+      </circle>
+    </svg>
+    <div class="plug-wallet-connection-loading-info">
+      <div class="plug-wallet-connection-loading-info-text">
+        <div>Waiting for your allowance or declination to continue the connection to your PlugWallet</div>
+        <img src="../assets/plugwallet_logo_sm.png" class="plug-wallet-connection-loading-info-logo">
+      </div>
+    </div>
+  </div>
+  <!-- App Main-Content -->
+  <div *ngIf="showAppContents" class="main-content-container">
+    <!-- Welcome Screen -->
+    <div *ngIf="!showNftPlatform" class="welcome-screen">
+      <div class="welcome-title">
+        Welcome to my first NFT demo
+      </div>
+      <div class="welcome-info">
+        Mint some NFT and earn rewards, buy new NFT from other artists with your earned rewards.
+      </div>
+      <div class="welcome-mode-selection">
+        <button class="mdc-button mdc-button--icon-leading mdc-button--outlined" (click)="plugAuthentication()"
+          [disabled]="plugAuthProcessing">
+          <span class="mdc-button__ripple"></span>
+          <img *ngIf="!plugAuthProcessing" class="mdc-button__icon" src="../assets/plugwallet_logo_sm.png"
+            height="24px">
+          <svg *ngIf="plugAuthProcessing" class="animated-spinner" width="20px" height="20px" viewBox="0 0 66 66"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle class="spinner-path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30">
+            </circle>
+          </svg>
+          <span class="mdc-button__label" style="margin-left: 5px;">Login via Plug Wallet</span>
+        </button>
+      </div>
+    </div>
+    <!-- NFT Platform -->
+    <app-platform *ngIf="showNftPlatform"></app-platform>
+  </div>
+</main>
